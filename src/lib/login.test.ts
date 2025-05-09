@@ -29,4 +29,6 @@ test('Sign in to Wikipedia', async ({ page }) => {
     await page.getByRole('button', { name: 'Log in' }).click();
 
     await expect(page.getByRole('link', { name: wikipediaUsername }).first()).toBeVisible();
+
+    await page.context().storageState({ path: authFile });
 });
