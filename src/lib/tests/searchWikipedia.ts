@@ -45,7 +45,7 @@ export async function run(page: Page, params: {}) {
 
     /** STEP: Assert that the latest edit was made by the user "Worstbull" */
     const latestEdit = page.getByRole('link', {
-        name: 'Worstbull',
+        name: username,
     }).nth(0);
 
     const userLink = await page.locator('.mw-userlink').first();
