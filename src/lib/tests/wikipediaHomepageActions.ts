@@ -13,6 +13,15 @@ import { Page, expect } from '@playwright/test';
  * Good luck!
  */
 
+async function getFontSize(page: Page, selector: string): Promise<number> {
+    const fontSize = await page.evaluate((sel) => {
+        const element = document.querySelector(sel);
+        if (!element) throw new Error(`Element with selector "${sel}" not found`);
+        return window.getComputedStyle(element).fontSize;
+    }, selector);
+    return parseInt(fontSize);
+}
+
 const articleCount = 7000000;
 
 export async function run(page: Page, params: {}) {
@@ -32,13 +41,21 @@ export async function run(page: Page, params: {}) {
 
     /** STEP: Select the 'Small' text size option in the appearance settings */
     const smallTextSizeOption = page.getByRole('radio', { name: 'Small' });
+    
+    const initialSize = await getFontSize(page, '#bodyContent');
     await smallTextSizeOption.click();
+    const smallSize = await getFontSize(page, '#bodyContent');
+    await expect(smallSize).toBeLessThan(initialSize);
 
     /** STEP: Click the 'Large' text size option to change the display size */
     const largeTextSizeOption = page.getByRole('radio', { name: 'Large' });
     await largeTextSizeOption.click();
+    const largeSize = await getFontSize(page, '#bodyContent');
+    await expect(largeSize).toBeGreaterThan(smallSize);
 
     /** STEP: Click the 'Standard' text size option in the appearance settings */
     const standardTextSizeButton = page.getByLabel('Standard').first();
     await standardTextSizeButton.click();
+    const standardSize = await getFontSize(page, '#bodyContent');
+    await expect(standardSize).toBeLessThan(largeSize);
 }
