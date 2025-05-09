@@ -12,12 +12,22 @@ import { Page, expect } from '@playwright/test';
  *
  * Good luck!
  */
+
+const articleCount = 7000000;
+
 export async function run(page: Page, params: {}) {
     /** STEP: Navigate to URL */
     await page.goto('https://en.wikipedia.org/wiki/Main_Page');
 
     /** STEP: Click the link to view the total number of articles in English */
-    const totalArticlesLink = page.getByRole('link', { name: '6,970,005' });
+    const totalArticlesLink = page.getByTitle('Special:Statistics').nth(1);
+    const count = await totalArticlesLink.textContent();
+
+    if (!count) {
+        throw new Error(`Cannot find total articles link!`);
+    }
+    await expect(parseInt(count.replace(/,/g, ''))).toBeLessThan(articleCount);
+
     await totalArticlesLink.click();
 
     /** STEP: Select the 'Small' text size option in the appearance settings */
