@@ -50,5 +50,5 @@ export async function run(page: Page, params: {}) {
 
     const userLink = await page.locator('.mw-userlink').first();
     const userLinkText = await userLink.textContent();
-    expect(userLinkText).toContain(username);
+    expect(userLinkText, `Last editor should be user ${username}`).toContain(username);
 }
