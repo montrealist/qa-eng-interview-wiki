@@ -16,6 +16,9 @@ import { Page, expect } from '@playwright/test';
  *
  * Good luck!
  */
+
+const username = 'Worstbull';
+
 export async function run(page: Page, params: {}) {
     /** STEP: Navigate to URL */
     await page.goto('https://www.wikipedia.org/');
@@ -29,6 +32,23 @@ export async function run(page: Page, params: {}) {
     /** STEP: Click the 'Artificial Intelligence' link in the search suggestions */
     const artificialIntelligenceLink = page.getByRole('link', {
         name: 'Artificial intelligence',
-    });
+    }).nth(0);
     await artificialIntelligenceLink.click();
+
+    /** STEP: Click the 'View history' link */
+    await page.waitForLoadState('domcontentloaded');
+    
+    const viewHistoryLink = page.getByRole('link', {
+        name: 'View history'
+    });
+    await viewHistoryLink.click();
+
+    /** STEP: Assert that the latest edit was made by the user "Worstbull" */
+    const latestEdit = page.getByRole('link', {
+        name: 'Worstbull',
+    }).nth(0);
+
+    const userLink = await page.locator('.mw-userlink').first();
+    const userLinkText = await userLink.textContent();
+    expect(userLinkText).toContain(username);
 }
