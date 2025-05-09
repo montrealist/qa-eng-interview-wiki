@@ -5,19 +5,19 @@ import { Page, expect } from '@playwright/test';
  * 1. Navigate to Wikipedia
  * 2. Go to the "Artificial intelligence" page
  * 3. Click "View history"
- * 4. Assert that the latest edit was made by the user "Worstbull"
+ * 4. Assert that the latest edit was made by the user "Alenoach"
  *
  * Instructions:
  * - Run the test and ensure it performs all steps described above
  * - Add assertions to the test to ensure it validates the expected
  *   behavior:
- *   - If the latest edit was not made by "Worstbull" update the steps above accordingly
+ *   - If the latest edit was not made by "Alenoach" update the steps above accordingly
  *   - Write your assertion to provide clear diagnostic feedback if it fails
  *
  * Good luck!
  */
 
-const username = 'Worstbull';
+const username = 'Alenoach';
 
 export async function run(page: Page, params: {}) {
     /** STEP: Navigate to URL */
@@ -43,7 +43,7 @@ export async function run(page: Page, params: {}) {
     });
     await viewHistoryLink.click();
 
-    /** STEP: Assert that the latest edit was made by the user "Worstbull" */
+    /** STEP: Assert that the latest edit was made by the user "Alenoach" */
     const latestEdit = page.getByRole('link', {
         name: username,
     }).nth(0);
