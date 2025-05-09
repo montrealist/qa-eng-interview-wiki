@@ -37,8 +37,6 @@ export async function run(page: Page, params: {}) {
     }
     await expect(parseInt(count.replace(/,/g, ''))).toBeLessThan(articleCount);
 
-    // await totalArticlesLink.click();
-
     /** STEP: Select the 'Small' text size option in the appearance settings */
     const smallTextSizeOption = page.getByRole('radio', { name: 'Small' });
     

@@ -19,7 +19,6 @@ test('Sign in to Wikipedia', async ({ page }) => {
         throw new Error(`Need a username and password to sign in!`);
     }
 
-    // await page.context().storageState({ path: authFile });
     await page.goto('https://en.wikipedia.org/');
     await page.getByRole('link', { name: 'Log in' }).click();
 
