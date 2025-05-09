@@ -1,5 +1,9 @@
 # Technical Assessment for QA Engineer at Ranger
 
+## Loom video
+
+https://www.loom.com/share/1a1dbbf9ab39481b91f2fd9cdc9661eb?sid=91f208d8-484b-46c9-9e46-7c2d7bde6577
+
 ## Overview
 
 In this exercise, you will work with Playwright (written in TypeScript) to create and complete three automated tests for Wikipedia.
