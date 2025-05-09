@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,4 +20,13 @@ test('Sign in to Wikipedia', async ({ page }) => {
     }
 
     // await page.context().storageState({ path: authFile });
+    await page.goto('https://en.wikipedia.org/');
+    await page.getByRole('link', { name: 'Log in' }).click();
+
+    await page.getByLabel('Username').fill(wikipediaUsername);
+    await page.getByLabel('Password').fill(wikipediaPassword);
+
+    await page.getByRole('button', { name: 'Log in' }).click();
+
+    await expect(page.getByRole('link', { name: wikipediaUsername }).first()).toBeVisible();
 });
